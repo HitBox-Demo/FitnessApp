@@ -1,6 +1,6 @@
-# FitSiswa
+# gymtracker_app 
 
-## gymtracker_app 
+## FitSiswa
 
 A new Flutter project.
 FitSiswa is a fitness-focused habit tracking app designed to help users build consistent workout routines. The app allows users to create custom workouts, track daily progress, and maintain streaks—all stored offline on their device. FitHero motivates users to stay active, stay consistent, and stay strong.
