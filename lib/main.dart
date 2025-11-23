@@ -148,7 +148,7 @@ class HeroInput extends StatelessWidget {
                 controller: controller,
                 // Switch between Text and Number keyboard based on isText flag
                 keyboardType: isText ? TextInputType.text : TextInputType.number,
-                textAlign: TextAlign.center, // Align text to start for titles, center for numbers
+                textAlign: isText ? TextAlign.start : TextAlign.center, // Align text to start for titles, center for numbers
                 style: const TextStyle(color: Colors.white),
                 decoration: InputDecoration(
                   contentPadding: const EdgeInsets.symmetric(vertical: 10),
@@ -489,8 +489,8 @@ class _GoalsScreenState extends State<GoalsScreen> {
                 Row(children: [
                   Container(
                     padding: const EdgeInsets.all(8), 
-                    decoration: BoxDecoration(color: (g.isCompleted ? Colors.green : Colors.orange.withOpacity(0.2)), borderRadius: BorderRadius.circular(8)), 
-                    child: Icon(Icons.track_changes, color: g.isCompleted ? Colors.green : Colors.orange.withOpacity(0.2), size: 20) // GOAL ICON (Goal Card)
+                    decoration: BoxDecoration(color: (g.isCompleted ? Colors.green.withOpacity(0.2) : Colors.orange.withOpacity(0.2)), borderRadius: BorderRadius.circular(8)), 
+                    child: Icon(Icons.track_changes, color: g.isCompleted ? Colors.green.withOpacity(0.2) : Colors.orange.withOpacity(0.2), size: 20) // GOAL ICON (Goal Card)
                   ),
                   const SizedBox(width: 12),
                   Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -536,13 +536,13 @@ class _GoalsScreenState extends State<GoalsScreen> {
       child: Column(mainAxisSize: MainAxisSize.min, children: [
         const Text("Create New Goal", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
         const SizedBox(height: 20),
-        HeroInput(label: "Goal Title", controller: tc),
+        HeroInput(label: "Goal Title", controller: tc, isText: true),
         const SizedBox(height: 15),
         HeroInput(label: "Target", controller: tgc), 
         const SizedBox(height: 30),
         SizedBox(width: double.infinity, child: ElevatedButton(style: ElevatedButton.styleFrom(backgroundColor: AppColors.primary), onPressed: () {
           if(tc.text.isNotEmpty && tgc.text.isNotEmpty) {
-            setState(() => DataStore().addGoal(Goal(title: tc.text, target: double.tryParse(tgc.text)??0, unit: "\t\t\t km/kg", deadline: DateTime.now())));
+            setState(() => DataStore().addGoal(Goal(title: tc.text, target: double.tryParse(tgc.text)??0, unit: "km", deadline: DateTime.now())));
             Navigator.pop(context);
           }
         }, child: const Text("Create Goal", style: TextStyle(color: Colors.white)))),
@@ -693,7 +693,8 @@ class _LogWorkoutScreenState extends State<LogWorkoutScreen> {
             TextField(controller: _nameC, decoration: const InputDecoration(hintText: "e.g. Bench Press"), style: const TextStyle(color: Colors.white)),
             const SizedBox(height: 10),
             // Quick Tag Chips
-            Wrap(spacing: 8, runSpacing: 8, children: _tags.map((e) => InkWell(onTap: () => setState(() => _nameC.text = e), child: Container(padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6), decoration: BoxDecoration(color: const Color(0xFF252840), borderRadius: BorderRadius.circular(8)), child: Text(e, style: const TextStyle(color: Colors.white70, fontSize: 12))))).toList()),
+            Wrap(spacing: 8, runSpacing: 8, children: _tags.map((e) => InkWell(onTap: () => setState(() => _nameC.text = e), child: Container(padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6), 
+            decoration: BoxDecoration(color: const Color(0xFF252840), borderRadius: BorderRadius.circular(8)), child: Text(e, style: const TextStyle(color: Colors.white70, fontSize: 12))))).toList()),
             const SizedBox(height: 20),
             Row(children: [
               Expanded(child: HeroInput(label: "Sets", controller: _setsC)),
@@ -721,7 +722,7 @@ class _LogWorkoutScreenState extends State<LogWorkoutScreen> {
           ]))),
           // Final Finish Button
           if (added.isNotEmpty) Padding(padding: const EdgeInsets.only(top: 20), child: SizedBox(width: double.infinity, height: 55, child: ElevatedButton(
-            style: ElevatedButton.styleFrom(backgroundColor: AppColors.green, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))),
+            style: ElevatedButton.styleFrom(backgroundColor: AppColors.green.withOpacity(0.2), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))),
             // Passing DateTime.now() to record the time when the workout is finished
             onPressed: () { DataStore().addWorkout(Workout(title: added.map((e)=>e['name']).join(", "), date: DateTime.now(), durationMinutes: 45, exerciseCount: added.length, exercises: added, status: "Completed")); Navigator.pop(context); },
             child: const Text("✓ Complete Workout", style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold)),
