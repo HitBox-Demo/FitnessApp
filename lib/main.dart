@@ -119,8 +119,17 @@ class HeroInput extends StatelessWidget {
   final String? dropdownValue;
   final List<String>? dropdownItems;
   final Function(String?)? onDropdownChanged;
+  final bool isText; // UPdate = Allow text input in goals title.
 
-  const HeroInput({super.key, required this.label, required this.controller, this.dropdownValue, this.dropdownItems, this.onDropdownChanged});
+  const HeroInput({
+    super.key, 
+    required this.label, 
+    required this.controller, 
+    this.dropdownValue, 
+    this.dropdownItems, 
+    this.onDropdownChanged,
+    this.isText = false, 
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -137,8 +146,9 @@ class HeroInput extends StatelessWidget {
               flex: 2,
               child: TextField(
                 controller: controller,
-                keyboardType: TextInputType.number,
-                textAlign: TextAlign.center,
+                // Switch between Text and Number keyboard based on isText flag
+                keyboardType: isText ? TextInputType.text : TextInputType.number,
+                textAlign: TextAlign.center, // Align text to start for titles, center for numbers
                 style: const TextStyle(color: Colors.white),
                 decoration: InputDecoration(
                   contentPadding: const EdgeInsets.symmetric(vertical: 10),
@@ -245,11 +255,12 @@ class DataStore {
   int currentStreak = 3, longestStreak = 364;
 
   /// Initialize dummy data for display
+  /// Running", "Cycling", "Squats", "Deadlift", "Bench Press", "Pull-ups", "Plank", "Lunges", "Push-ups
   void _initMockData() {
     history.addAll([
-      Workout(title: "Full Body", date: DateTime(2023, 10, 24, 18, 30), durationMinutes: 45, exerciseCount: 5, status: "Completed"),
-      Workout(title: "Upper Body", date: DateTime.now().subtract(const Duration(days: 3)), durationMinutes: 30, exerciseCount: 3, status: "Completed"),
-      Workout(title: "Morning Run", date: DateTime.now(), durationMinutes: 10, exerciseCount: 1, status: "Ongoing"),
+      Workout(title: "Squats, Bench Press, Push-ups", date: DateTime(2023, 10, 24, 18, 30), durationMinutes: 45, exerciseCount: 3, status: "Completed"),
+      Workout(title: "Cycling", date: DateTime.now().subtract(const Duration(days: 3)), durationMinutes: 30, exerciseCount: 1, status: "Completed"),
+      Workout(title: "Running", date: DateTime.now(), durationMinutes: 10, exerciseCount: 1, status: "Ongoing"),
     ]);
     
     goals.add(Goal(title: "Run", target: 3, unit: "\t\t\t km/kg", deadline: DateTime.now().add(const Duration(days: 30))));
@@ -412,7 +423,7 @@ class HomeScreen extends StatelessWidget {
               ])),
             ),
             const Divider(color: Colors.white10, height: 30),
-            Text("2 workouts completed this week", style: textTheme.bodySmall),
+            Text("22 workouts completed this week", style: textTheme.bodySmall),
           ])),
           
           const SizedBox(height: 20),
@@ -508,7 +519,10 @@ class _GoalsScreenState extends State<GoalsScreen> {
           )),
           
           // Add New Goal Button
-          SizedBox(width: double.infinity, height: 50, child: ElevatedButton.icon(style: ElevatedButton.styleFrom(backgroundColor: AppColors.primary, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))), onPressed: _showAddGoal, icon: const Icon(Icons.add, color: Colors.white), label: const Text("Add New Goal", style: TextStyle(color: Colors.white)))),
+          SizedBox(width: double.infinity, height: 50, 
+          child: ElevatedButton.icon(style: ElevatedButton.styleFrom(backgroundColor: AppColors.primary, 
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))), onPressed: _showAddGoal, 
+          icon: const Icon(Icons.add, color: Colors.white), label: const Text("Add New Goal", style: TextStyle(color: Colors.white)))),
         ],
       ),
     );
@@ -576,11 +590,17 @@ class _HistoryScreenState extends State<HistoryScreen> {
                     Row(children: [
                       Text("${w.date.month}/${w.date.day}", style: TextStyle(color: Colors.blue[200], fontSize: 12)),
                       const SizedBox(width: 8),
-                      Container(padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2), decoration: BoxDecoration(color: (ongoing?Colors.blue:Colors.green).withOpacity(0.2), borderRadius: BorderRadius.circular(4)), child: Text(w.status, style: TextStyle(color: ongoing?Colors.blue:Colors.green, fontSize: 10, fontWeight: FontWeight.bold))),
+                      Container(padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2), 
+                      decoration: BoxDecoration(color: (ongoing?Colors.blue:Colors.green).withOpacity(0.2), 
+                      borderRadius: BorderRadius.circular(4)), child: Text(w.status, style: TextStyle(color: ongoing?Colors.blue:Colors.green, 
+                      fontSize: 10, fontWeight: FontWeight.bold))),
                     ])
                   ]),
                   Row(children: [
-                    Container(padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4), decoration: BoxDecoration(color: Colors.orange.withOpacity(0.2), borderRadius: BorderRadius.circular(20)), child: Text("${w.exerciseCount} exercises", style: const TextStyle(color: Colors.orange, fontSize: 10))),
+                    Container(padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4), 
+                    decoration: BoxDecoration(color: Colors.orange.withOpacity(0.2), 
+                    borderRadius: BorderRadius.circular(20)), child: Text("${w.exerciseCount} exercises", 
+                    style: const TextStyle(color: Colors.orange, fontSize: 10))),
                     const SizedBox(width: 10),
                     InkWell(onTap: () => setState(() => DataStore().removeWorkout(w)), child: const Icon(Icons.close, color: Colors.grey, size: 18))
                   ])
@@ -639,10 +659,10 @@ class LogWorkoutScreen extends StatefulWidget {
 }
 
 class _LogWorkoutScreenState extends State<LogWorkoutScreen> {
-  final _nameC = TextEditingController(), _setsC = TextEditingController(), _repsC = TextEditingController(), _qtyC = TextEditingController(text: "0");
+  final _nameC = TextEditingController(), _setsC = TextEditingController(), _repsC = TextEditingController(), _qtyC = TextEditingController(text: " ");
   String _unit = "kg";
   List<Map<String, dynamic>> added = [];
-  final _tags = ["Running", "Cycling", "Squats", "Deadlift", "Bench Press", "Pull-ups", "Plank", "Lunges", "Push-ups"];
+  final _tags = ["Running", "Cycling", "Squats", "Deadlift", "Bench Press", "Pull-ups", "Plank", "Lunges", "Push-ups"]; // Exercises List
 
   // Add exercise to temporary list
   void _add() {
@@ -654,7 +674,7 @@ class _LogWorkoutScreenState extends State<LogWorkoutScreen> {
 
   // Clear input fields
   void _clear() {
-    setState(() { _nameC.clear(); _setsC.clear(); _repsC.clear(); _qtyC.text = "0"; _unit = "kg"; });
+    setState(() { _nameC.clear(); _setsC.clear(); _repsC.clear(); _qtyC.text = " "; _unit = "kg"; });
   }
 
   @override
