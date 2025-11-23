@@ -1,4 +1,4 @@
-# gymtracker_app
+# gymtracker_app = FitSiswa
 
 A new Flutter project.
 
