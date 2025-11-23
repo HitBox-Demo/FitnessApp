@@ -8,25 +8,25 @@ FitSiswa is a fitness-focused habit tracking app designed to help users build co
 
 ### Features
 
-📅 Daily Workout Tracking – Log exercises and track progress effortlessly
+- 📅 Daily Workout Tracking – Log exercises and track progress effortlessly
 
-🏋️ Custom Workouts – Create personalized workout plans
+- 🏋️ Custom Workouts – Create personalized workout plans
 
-🔥 Streak System – Stay motivated with daily activity streaks
+- 🔥 Streak System – Stay motivated with daily activity streaks
 
-📱 Fully Offline – All data is securely stored on the device
+- 📱 Fully Offline – All data is securely stored on the device
 
-🎯 Simple & Intuitive UI – Designed for consistency and ease of use
+- 🎯 Simple & Intuitive UI – Designed for consistency and ease of use
 
 ### Tech Stack
 
-Framework: Flutter
+- Framework: Flutter
 
-Language: Dart
+- Language: Dart
 
-Storage: Local offline storage (Hive/SQLite depending on implementation)
+- Storage: Local offline storage (Hive/SQLite depending on Future implementation)
 
-State Management: Provider/GetX/Bloc (adjust based on project)
+- State Management: Provider/GetX/Bloc (adjust based on project)
 
 ## Getting Started
 
