@@ -22,7 +22,7 @@ class FitHeroApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'FitHero',
+      title: 'FitSiswa',
       debugShowCheckedModeBanner: false,
       // Global Theme Configuration
       theme: ThemeData(
@@ -375,7 +375,7 @@ class HomeScreen extends StatelessWidget {
             Container(padding: const EdgeInsets.all(8), decoration: BoxDecoration(color: AppColors.primary, borderRadius: BorderRadius.circular(12)), child: const Icon(Icons.fitness_center, color: Colors.white)),
             const SizedBox(width: 12),
             Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              const Text("FitHero", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+              const Text("FitSiswa", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
               Text("Stay Consistent, Stay Strong", style: textTheme.bodySmall),
             ]),
           ]),
