@@ -270,7 +270,7 @@ class DataStore {
       Achievement(title: "Getting Ready", description: "Complete 5 workouts", currentProgress: 22, targetProgress: 5, isUnlocked: true, icon: Icons.track_changes),
       Achievement(title: "Committed Person", description: "Complete 10 workouts", currentProgress: 22, targetProgress: 10, isUnlocked: true, icon: Icons.track_changes),
       Achievement(title: "Dedicated, sir?", description: "Complete 25 workouts", currentProgress: 22, targetProgress: 25, isUnlocked: false, icon: Icons.lock),
-      Achievement(title: "Fit Hero!!", description: "Complete 50 workouts", currentProgress: 22, targetProgress: 50, isUnlocked: false, icon: Icons.track_changes),
+      Achievement(title: "Fit Hero!!", description: "Complete 50 workouts", currentProgress: 22, targetProgress: 50, isUnlocked: false, icon: Icons.lock),
       Achievement(title: "The Man, The Legend", description: "Complete 100 workouts", currentProgress: 22, targetProgress: 100, isUnlocked: false, icon: Icons.lock),
       Achievement(title: "On Firee~", description: "Maintaining a 3-day Streak", currentProgress: 3, targetProgress: 3, isUnlocked: true, icon: Icons.track_changes),
       Achievement(title: "Weeker", description: "Maintaining a 7-day Streak", currentProgress: 3, targetProgress: 7, isUnlocked: false, icon: Icons.lock),
